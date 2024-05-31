@@ -1,0 +1,87 @@
+﻿<Page x:Class="SchoolManagementProjectWPF.Views.Pages.StudentRegisterPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolManagementProjectWPF.Views.Pages"
+      mc:Ignorable="d" 
+      Height="auto" Width="auto"
+      x:Name="StudentRegisterPage">
+
+
+    <Grid Margin="0 20 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox  Width="200" Text="{Binding CopyEditStudent.Name ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                 Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" ToolTip="Name"  />
+            <TextBox Width="200" Text="{Binding CopyEditStudent.Surname ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"  ToolTip="Surname"    />
+            <TextBox Width="200" Text="{Binding CopyEditStudent.FatherName ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" ToolTip="Father Name"/>
+            <ComboBox Width="200" Margin="10,5" SelectedIndex="{Binding CopyEditStudent.Gender ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+         Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" ToolTip="Gender" >
+                <ComboBoxItem Content="Male"/>
+                <ComboBoxItem Content="Female"/>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="Birth Date" Margin="10,5"
+                Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"   />
+            <DatePicker Width="170" Margin="10,5" SelectedDate="{Binding CopyEditStudent.BirthDate ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                      Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"/>
+
+            <TextBox Width="220" Text="{Binding CopyEditStudent.Address ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" ToolTip="Address"/>
+            <TextBox Width="180" Text="{Binding CopyEditStudent.PhoneNumber ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" ToolTip="Phone Number ( 50 000 00 00 )"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox Width="200" Text="{Binding CopyEditStudent.UserName ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"  ToolTip="User Name"/>
+            <TextBox Width="200" Text="{Binding CopyEditStudent.Password ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5,15,5"
+                  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" ToolTip="Password"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox Width="300" Text="{Binding CopyEditStudent.Email ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"  ToolTip="Email"/>
+            <TextBox Width="100" Text="{Binding VerifyCode,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"  ToolTip="Verify Code"/>
+            <Button Width="150" Margin="20,5,10,5" Content="Get Verify Code" Command="{Binding VerifyEmailCommand}"
+                 Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Width="150" Content="Profile Picture" Margin="10,5" Height="35" Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Image Width="60" Margin="14,2,4,2" Height="60" Source="{Binding CopyEditStudent.ProfilePicturePath ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+            <TextBox Width="150" Text="{Binding CopyEditStudent.ProfilePicturePath ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="10,5"
+                  Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}" Height="35"/>
+            <Button Width="150" Margin="20,5,10,5" Height="35" Content="Change Path" Command="{Binding ChangePPCommand}"
+                 Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="Save" Margin="0,0,20,0" Foreground="{DynamicResource FrMode}" Background="{DynamicResource BaMode}"
+                  Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=StudentRegisterPage}"/>
+            <Button Content="Cancel" Margin="20,0,0,0" Foreground="{DynamicResource FrMode}" Background="{DynamicResource BaMode}"
+                 Command="{Binding BackCommand}" CommandParameter="{Binding ElementName=StudentRegisterPage}" />
+            <Button 
+                  Content="Change Theme" Width="200" Command="{Binding ChangeThemeCommand}" Foreground="{DynamicResource FrMode}"
+                Margin="20,0,0,0" Background="{DynamicResource BaMode}" />
+        </StackPanel>
+
+
+    </Grid>
+</Page>

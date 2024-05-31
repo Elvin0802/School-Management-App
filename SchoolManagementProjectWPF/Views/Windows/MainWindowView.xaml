@@ -1,0 +1,22 @@
+﻿<NavigationWindow x:Class="SchoolManagementProjectWPF.Views.Windows.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolManagementProjectWPF.Views.Windows"
+        mc:Ignorable="d"
+        
+        ShowsNavigationUI="False"
+        FontFamily="Arial" Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"
+        Title="School Management App"  WindowStartupLocation="CenterScreen"
+        Height="600" Width="1000"
+                  >
+    <!--Icon="..\..\Images\ForApp\smIcon.png"-->
+
+    <NavigationWindow.Content>
+        <Grid>
+            <Frame x:Name="MainFrame"/>
+        </Grid>
+    </NavigationWindow.Content>
+
+</NavigationWindow>

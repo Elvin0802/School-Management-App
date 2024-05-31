@@ -1,0 +1,79 @@
+﻿<Page x:Class="SchoolManagementProjectWPF.Views.Pages.TeacherPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolManagementProjectWPF.Views.Pages"
+      mc:Ignorable="d" 
+      Height="auto" Width="auto"
+      x:Name="TeacherPage">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="5">
+            
+            <Button Content="My Classroom" Margin="5" Command="{Binding MyClassroomCommand}" 
+                 Width="170" Height="40"  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" />
+            
+            <Button Content="Add Exam" Margin="5" Command="{Binding AddExamCommand}"
+                   Width="170" Height="40"  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"/>
+
+            <Button Content="Remove Exam" Margin="5" Command="{Binding RemoveExamCommand}"
+                   Width="170" Height="40"  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"/>
+            
+            <Button Content="Edit My Data" Margin="5" Width="170" Height="40"  Background="{DynamicResource BaMode}"  
+                    Foreground="{DynamicResource FrMode}" Command="{Binding EditMyDataCommand}"/>
+
+            <Button Content="Change Theme" Width="170" Height="40" Command="{Binding ChangeThemeCommand}" Foreground="{DynamicResource FrMode}"
+                     Margin="5" Background="{DynamicResource BaMode}"/>
+
+            <Button Content="Back" Margin="5" Command="{Binding BackCommand}" CommandParameter="{Binding ElementName=TeacherPage}"
+                	Width="170" Height="40" Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"/>
+            
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="Sorted By:" Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}" FontSize="16"/>
+
+                <ComboBox Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}" FontSize="15"
+                          SelectedIndex="{Binding SortIndex ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                    <ComboBoxItem Content="Subject Increasing"/>
+                    <ComboBoxItem Content="Question Count Increasing"/>
+                    <ComboBoxItem Content="Subject Decreasing"/>
+                    <ComboBoxItem Content="Question Count Decreasing"/>
+                </ComboBox>
+
+            </StackPanel>
+
+            <ListView x:Name="BaseListView" Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" >
+                <ListView.View>
+                    <GridView>
+
+                        <GridViewColumn Width="160" DisplayMemberBinding="{Binding ID, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBlock Text="ID" Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"/>
+                        </GridViewColumn>
+                        
+                        <GridViewColumn Width="160" DisplayMemberBinding="{Binding Subject, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBlock Text="Subject" Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"/>
+                        </GridViewColumn>
+
+                        <GridViewColumn Width="160" DisplayMemberBinding="{Binding SharedTime, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBlock Text="Shared Time" Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}"/>
+                        </GridViewColumn>
+
+                        <GridViewColumn Width="160" DisplayMemberBinding="{Binding QuestionCount, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBlock Text="Question Count" Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"/>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </StackPanel>
+    </Grid>
+</Page>

@@ -1,0 +1,20 @@
+﻿SchoolManagementProjectWPF
+
+
+winexe
+C#
+.cs
+D:\Visual Studio - IDE\C# Codes File\WPF Apps\SchoolManagementProjectWPF\SchoolManagementProjectWPF\obj\Debug\net8.0-windows\
+SchoolManagementProjectWPF
+none
+false
+TRACE;DEBUG;NET;NET8_0;NETCOREAPP
+D:\Visual Studio - IDE\C# Codes File\WPF Apps\SchoolManagementProjectWPF\SchoolManagementProjectWPF\App.xaml
+12892942057
+
+431864004840
+202-1457355749
+Views\Pages\AddClassroomPageView.xaml;Views\Pages\AddExamPageView.xaml;Views\Pages\AdminPageView.xaml;Views\Pages\AllClassroomsPageView.xaml;Views\Pages\MyExamsPageView.xaml;Views\Pages\ShowClassroomPageView.xaml;Views\Pages\SignInPageView.xaml;Views\Pages\StudentPageView.xaml;Views\Pages\StudentRegisterPageView.xaml;Views\Pages\TeacherPageView.xaml;Views\Pages\TeacherRegisterPageView.xaml;Views\Windows\MainWindowView.xaml;
+
+False
+
