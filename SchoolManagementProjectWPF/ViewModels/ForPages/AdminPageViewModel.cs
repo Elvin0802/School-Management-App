@@ -161,17 +161,24 @@ public class AdminPageViewModel : BaseViewModel
 
 	public void SortStudents(int index)
 	{
-		if (index == 0)
-			Teachers = new(Teachers?.OrderBy(s => s.Name)!);
-		else if (index == 1)
-			Teachers = new(Teachers?.OrderBy(s => s.Surname)!);
-		else if (index == 2)
-			Teachers = new(Teachers?.OrderByDescending(s => s.Name)!);
-		else if (index == 3)
-			Teachers = new(Teachers?.OrderByDescending(s => s.Surname)!);
+		try
+		{
+			if (index == 0)
+				Teachers = new(Teachers?.OrderBy(s => s.Name)!);
+			else if (index == 1)
+				Teachers = new(Teachers?.OrderBy(s => s.Surname)!);
+			else if (index == 2)
+				Teachers = new(Teachers?.OrderByDescending(s => s.Name)!);
+			else if (index == 3)
+				Teachers = new(Teachers?.OrderByDescending(s => s.Surname)!);
 
-		App.Container!.GetInstance<AdminPageView>().BaseListView.ItemsSource = Teachers;
-		App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+			App.Container!.GetInstance<AdminPageView>().BaseListView.ItemsSource = Teachers;
+			App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+		}
+		catch
+		{
+			MessageBox.Show("Exams not sorted.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+		}
 	}
 
 	#endregion

@@ -22,7 +22,24 @@ public class ShowClassroomPageViewModel : BaseViewModel
 	}
 
 	private Classroom? currentClassroom;
+	private int sortIndex;
+
 	public Classroom? CurrentClassroom { get => currentClassroom; set { currentClassroom = value; OnPropertyChanged(); } }
+	public int SortIndex
+	{
+		get => sortIndex;
+		set
+		{
+			try
+			{
+				sortIndex=value;
+				OnPropertyChanged();
+				SortStudents(value);
+			}
+			catch { MessageBox.Show("Error in Sorting."); }
+		}
+	}
+
 
 	#region Add Student Command
 
@@ -107,6 +124,31 @@ public class ShowClassroomPageViewModel : BaseViewModel
 	#endregion
 
 
+	#region List Sort Function
+
+	public void SortStudents(int index)
+	{
+		try
+		{
+			if (index == 0)
+				CurrentClassroom!.Students = new(CurrentClassroom!.Students?.OrderBy(s => s.Name)!);
+			else if (index == 1)
+				CurrentClassroom!.Students = new(CurrentClassroom!.Students?.OrderBy(s => s.Surname)!);
+			else if (index == 2)
+				CurrentClassroom!.Students = new(CurrentClassroom!.Students?.OrderByDescending(s => s.Name)!);
+			else if (index == 3)
+				CurrentClassroom!.Students = new(CurrentClassroom!.Students?.OrderByDescending(s => s.Surname)!);
+
+			App.Container!.GetInstance<AdminPageView>().BaseListView.ItemsSource = CurrentClassroom!.Students;
+			App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+		}
+		catch
+		{
+			MessageBox.Show("Students not sorted.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+		}
+	}
+
+	#endregion
 
 
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1VIvfqQgNoDSJKZWgK31QkIQ3PNZv3E81WUuHnT4a6CfFzhbOK3Bc1Zk7aLGDu2V1tEiJ5mFC360Ey4Wf4t5Hw==",
+  "dgSpecHash": "uUBrIwAqs1BZhmI1NICHm4x9uF5Kh6BZo+FoPN/rHyJoP06SQ8k5tPoh/MbBgdsFsT9ftRHAO53uzS+1Jxdk7A==",
   "success": true,
-  "projectFilePath": "D:\\Visual Studio - IDE\\C# Codes File\\WPF Apps\\SchoolManagementProjectWPF\\SchoolManagementProjectWPF\\SchoolManagementProjectWPF.csproj",
+  "projectFilePath": "D:\\Visual Studio - IDE\\C# Codes File\\Final Projects\\School Management Project\\SchoolManagementProjectWPF\\SchoolManagementProjectWPF.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Принц\\.nuget\\packages\\materialdesigncolors\\2.1.4\\materialdesigncolors.2.1.4.nupkg.sha512",
     "C:\\Users\\Принц\\.nuget\\packages\\materialdesignthemes\\4.9.0\\materialdesignthemes.4.9.0.nupkg.sha512",

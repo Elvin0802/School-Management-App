@@ -28,8 +28,23 @@ public class AllClassroomsPageViewModel : BaseViewModel
 		App.Container.GetInstance<AllClassroomsPageView>().BaseListView.Items.Refresh();
 	}
 	private ObservableCollection<Classroom>? currentClassroms;
+	private int sortIndex;
 
 	public ObservableCollection<Classroom>? CurrentClassroms { get => currentClassroms; set { currentClassroms = value; OnPropertyChanged(); } }
+	public int SortIndex
+	{
+		get => sortIndex;
+		set
+		{
+			try
+			{
+				sortIndex=value;
+				OnPropertyChanged();
+				SortClassrooms(value);
+			}
+			catch { MessageBox.Show("Error in Sorting."); }
+		}
+	}
 
 
 	#region Add Classroom Command
@@ -135,5 +150,23 @@ public class AllClassroomsPageViewModel : BaseViewModel
 	#endregion
 
 
+	#region List Sort Function
+
+	public void SortClassrooms(int index)
+	{
+		if (index == 0)
+			CurrentClassroms = new(CurrentClassroms?.OrderBy(s => s.Name)!);
+		else if (index == 1)
+			CurrentClassroms = new(CurrentClassroms?.OrderBy(s => s.StudentCount)!);
+		else if (index == 2)
+			CurrentClassroms = new(CurrentClassroms?.OrderByDescending(s => s.Name)!);
+		else if (index == 3)
+			CurrentClassroms = new(CurrentClassroms?.OrderByDescending(s => s.StudentCount)!);
+
+		App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.ItemsSource = CurrentClassroms;
+		App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.Items.Refresh();
+	}
+
+	#endregion
 
 }

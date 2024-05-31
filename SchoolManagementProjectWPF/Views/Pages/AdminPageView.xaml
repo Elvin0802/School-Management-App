@@ -38,6 +38,7 @@
 		</StackPanel>
 
 		<StackPanel Grid.Column="1">
+            
             <StackPanel Orientation="Horizontal">
                 <Label Content="Sorted By:" Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"/>
                 <ComboBox Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"

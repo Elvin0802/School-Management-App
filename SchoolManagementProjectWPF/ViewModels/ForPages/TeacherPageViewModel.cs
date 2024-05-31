@@ -25,8 +25,25 @@ public class TeacherPageViewModel : BaseViewModel
 
 	private Teacher? currentTeacher;
 	private ObservableCollection<Exam>? exams;
+	private int sortIndex;
 	public Teacher? CurrentTeacher { get => currentTeacher; set { currentTeacher = value; OnPropertyChanged(); } }
 	public ObservableCollection<Exam>? Exams { get => exams; set { exams = value; OnPropertyChanged(); } }
+	public int SortIndex
+	{
+		get => sortIndex;
+		set
+		{
+			try
+			{
+				sortIndex=value;
+				OnPropertyChanged();
+				SortExams(value);
+			}
+			catch { MessageBox.Show("Error in Sorting."); }
+		}
+	}
+
+
 
 	#region Add Exam Command
 
@@ -143,6 +160,28 @@ public class TeacherPageViewModel : BaseViewModel
 		{
 			MessageBox.Show("You are not Head Teacher", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 			return;
+		}
+	}
+
+	public void SortExams(int index)
+	{
+		try
+		{
+			if (index == 0)
+				Exams = new(Exams?.OrderBy(s => s.Subject)!);
+			else if (index == 1)
+				Exams = new(Exams?.OrderBy(s => s.QuestionCount)!);
+			else if (index == 2)
+				Exams = new(Exams?.OrderByDescending(s => s.Subject)!);
+			else if (index == 3)
+				Exams = new(Exams?.OrderByDescending(s => s.QuestionCount)!);
+
+			App.Container!.GetInstance<AdminPageView>().BaseListView.ItemsSource = Exams;
+			App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+		}
+		catch
+		{
+			MessageBox.Show("Exams not sorted.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
 

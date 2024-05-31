@@ -37,6 +37,17 @@
 
         <StackPanel Grid.Column="1">
 
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Sorted By:" Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"/>
+                <ComboBox Background="{DynamicResource BaMode}" Foreground="{DynamicResource FrMode}"
+			  SelectedIndex="{Binding SortIndex ,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ComboBoxItem Content="Name Increasing"/>
+                    <ComboBoxItem Content="Student Count Increasing"/>
+                    <ComboBoxItem Content="Name Decreasing"/>
+                    <ComboBoxItem Content="Student Count Decreasing"/>
+                </ComboBox>
+            </StackPanel>
+
             <ListView x:Name="BaseListView"  Background="{DynamicResource BaMode}"  Foreground="{DynamicResource FrMode}" >
                 <ListView.View>
                     <GridView>
