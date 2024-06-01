@@ -19,4 +19,7 @@ student -> exam larina baxa biler . exam yaza biler ( random yazmisam avto hesab
 oz sinifine baxa biler.
 bezi view lerde sort funksionalligi var. 
 
+Edit ederken mutleq username ni deyisin, cunki yoxlayir ve hemin username var deye save ye icaze vermir.
+Save can execute bezen gec yoxlayir eger save button yanmasa text box lari deyisin , update source trigger ishlesin .
+
 Muellim , bezi yerlerde kod tekrari ola biler , chunki 1 dene sey deyisir qalani eynidi amma o bir deneye gore ortaq elemek olmur kodlari bezi yerlerde.
