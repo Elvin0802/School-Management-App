@@ -53,22 +53,26 @@ public class AllClassroomsPageViewModel : BaseViewModel
 
 	public void AddClassroomCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<AddClassroomPageView>();
-		var NextViewModel = App.Container.GetInstance<AddClassroomPageViewModel>();
+		try
+		{
+			var NextView = App.Container!.GetInstance<AddClassroomPageView>();
+			var NextViewModel = App.Container.GetInstance<AddClassroomPageViewModel>();
 
-		Classroom newCr = new();
+			Classroom newCr = new();
 
-		NextViewModel!.isEdit = false;
-		NextViewModel!.EditClassroom = newCr;
-		NextViewModel!.CopyEditClassroom = new Classroom();
+			NextViewModel!.isEdit = false;
+			NextViewModel!.EditClassroom = newCr;
+			NextViewModel!.CopyEditClassroom = new Classroom();
 
-		NextViewModel.GetEmptyTeachers();
+			NextViewModel.GetEmptyTeachers();
 
-		NextView!.DataContext = NextViewModel;
+			NextView!.DataContext = NextViewModel;
 
-		MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
 
-		win?.Navigate(NextView);
+			win?.Navigate(NextView);
+		}
+		catch { MessageBox.Show("Error in Add Classroom Command Execute", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 	}
 	#endregion
 
@@ -103,22 +107,26 @@ public class AllClassroomsPageViewModel : BaseViewModel
 	public ICommand ShowClassroomCommand { get; set; }
 	public void ShowClassroomCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<ShowClassroomPageView>();
-		var NextViewModel = App.Container.GetInstance<ShowClassroomPageViewModel>();
-
-		if (App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.SelectedValue is Classroom classroom)
+		try
 		{
-			NextViewModel!.CurrentClassroom = classroom;
+			var NextView = App.Container!.GetInstance<ShowClassroomPageView>();
+			var NextViewModel = App.Container.GetInstance<ShowClassroomPageViewModel>();
 
-			NextView!.DataContext = NextViewModel;
+			if (App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.SelectedValue is Classroom classroom)
+			{
+				NextViewModel!.CurrentClassroom = classroom;
 
-			App.Container!.GetInstance<ShowClassroomPageView>().BaseListView.ItemsSource = NextViewModel!.CurrentClassroom.Students;
-			App.Container!.GetInstance<ShowClassroomPageView>().BaseListView.Items.Refresh();
+				NextView!.DataContext = NextViewModel;
 
-			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+				App.Container!.GetInstance<ShowClassroomPageView>().BaseListView.ItemsSource = NextViewModel!.CurrentClassroom.Students;
+				App.Container!.GetInstance<ShowClassroomPageView>().BaseListView.Items.Refresh();
 
-			win?.Navigate(NextView);
+				MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+
+				win?.Navigate(NextView);
+			}
 		}
+		catch { MessageBox.Show("Error in Show Classroom Command Execute", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 	}
 
 	#endregion
@@ -128,43 +136,50 @@ public class AllClassroomsPageViewModel : BaseViewModel
 	public ICommand EditClassroomCommand { get; set; }
 	public void EditClassroomCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<AddClassroomPageView>();
-		var NextViewModel = App.Container.GetInstance<AddClassroomPageViewModel>();
-
-		if (App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.SelectedValue is Classroom classroom)
+		try
 		{
-			NextViewModel!.isEdit = true;
-			NextViewModel!.EditClassroom = classroom;
-			NextViewModel!.CopyEditClassroom = classroom.Clone() as Classroom;
+			var NextView = App.Container!.GetInstance<AddClassroomPageView>();
+			var NextViewModel = App.Container.GetInstance<AddClassroomPageViewModel>();
 
-			NextViewModel.GetEmptyTeachers();
+			if (App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.SelectedValue is Classroom classroom)
+			{
+				NextViewModel!.isEdit = true;
+				NextViewModel!.EditClassroom = classroom;
+				NextViewModel!.CopyEditClassroom = classroom.Clone() as Classroom;
 
-			NextView!.DataContext = NextViewModel;
+				NextViewModel.GetEmptyTeachers();
 
-			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+				NextView!.DataContext = NextViewModel;
 
-			win?.Navigate(NextView);
+				MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+
+				win?.Navigate(NextView);
+			}
 		}
+		catch { MessageBox.Show("Error in Edit Classroom Command Execute", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 	}
 
 	#endregion
-
 
 	#region List Sort Function
 
 	public void SortClassrooms(int index)
 	{
-		if (index == 0)
-			CurrentClassroms = new(CurrentClassroms?.OrderBy(s => s.Name)!);
-		else if (index == 1)
-			CurrentClassroms = new(CurrentClassroms?.OrderBy(s => s.StudentCount)!);
-		else if (index == 2)
-			CurrentClassroms = new(CurrentClassroms?.OrderByDescending(s => s.Name)!);
-		else if (index == 3)
-			CurrentClassroms = new(CurrentClassroms?.OrderByDescending(s => s.StudentCount)!);
+		try
+		{
+			if (index == 0)
+				CurrentClassroms = new(CurrentClassroms?.OrderBy(s => s.Name)!);
+			else if (index == 1)
+				CurrentClassroms = new(CurrentClassroms?.OrderBy(s => s.StudentCount)!);
+			else if (index == 2)
+				CurrentClassroms = new(CurrentClassroms?.OrderByDescending(s => s.Name)!);
+			else if (index == 3)
+				CurrentClassroms = new(CurrentClassroms?.OrderByDescending(s => s.StudentCount)!);
 
-		App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.ItemsSource = CurrentClassroms;
-		App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.Items.Refresh();
+			App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.ItemsSource = CurrentClassroms;
+			App.Container!.GetInstance<AllClassroomsPageView>().BaseListView.Items.Refresh();
+		}
+		catch { MessageBox.Show("Error in Sort Classroom .", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 	}
 
 	#endregion

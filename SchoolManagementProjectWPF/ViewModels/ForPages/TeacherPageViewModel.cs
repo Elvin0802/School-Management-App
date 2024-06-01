@@ -43,8 +43,6 @@ public class TeacherPageViewModel : BaseViewModel
 		}
 	}
 
-
-
 	#region Add Exam Command
 
 	public ICommand AddExamCommand { get; set; }
@@ -55,18 +53,22 @@ public class TeacherPageViewModel : BaseViewModel
 	}
 	public void AddExamCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<AddExamPageView>();
-		var NextViewModel = App.Container.GetInstance<AddExamPageViewModel>();
+		try
+		{
+			var NextView = App.Container!.GetInstance<AddExamPageView>();
+			var NextViewModel = App.Container.GetInstance<AddExamPageViewModel>();
 
-		CheckClass();
+			CheckClass();
 
-		NextViewModel.Classroom = AppDbContex.School!.GetClassroom(CurrentTeacher!.ClassID!.Value);
+			NextViewModel.Classroom = AppDbContex.School!.GetClassroom(CurrentTeacher!.ClassID!.Value);
 
-		NextView!.DataContext = NextViewModel;
+			NextView!.DataContext = NextViewModel;
 
-		MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
 
-		win?.Navigate(NextView);
+			win?.Navigate(NextView);
+		}
+		catch { MessageBox.Show("Error in AddExamCommandExecute for Teacher", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 	}
 
 	#endregion
@@ -176,8 +178,8 @@ public class TeacherPageViewModel : BaseViewModel
 			else if (index == 3)
 				Exams = new(Exams?.OrderByDescending(s => s.QuestionCount)!);
 
-			App.Container!.GetInstance<AdminPageView>().BaseListView.ItemsSource = Exams;
-			App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+			App.Container!.GetInstance<TeacherPageView>().BaseListView.ItemsSource = Exams;
+			App.Container!.GetInstance<TeacherPageView>().BaseListView.Items.Refresh();
 		}
 		catch
 		{

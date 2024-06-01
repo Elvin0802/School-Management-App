@@ -28,7 +28,6 @@ public class Person : User, ICloneable
 
 	#endregion
 
-
 	public Person() : base()
 	{
 	}

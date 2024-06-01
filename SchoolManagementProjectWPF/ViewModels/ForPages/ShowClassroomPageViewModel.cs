@@ -52,21 +52,28 @@ public class ShowClassroomPageViewModel : BaseViewModel
 	}
 	public void AddStudentCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<StudentRegisterPageView>();
-		var NextViewModel = App.Container.GetInstance<StudentRegisterPageViewModel>();
+		try
+		{
+			var NextView = App.Container!.GetInstance<StudentRegisterPageView>();
+			var NextViewModel = App.Container.GetInstance<StudentRegisterPageViewModel>();
 
-		Student newSt = new();
+			Student newSt = new();
 
-		NextViewModel!.isEdit = false;
-		NextViewModel!.EditStudent = newSt;
-		NextViewModel!.CopyEditStudent = new Student();
-		NextViewModel!.ClassId = CurrentClassroom!.ID;
+			NextViewModel!.isEdit = false;
+			NextViewModel!.EditStudent = newSt;
+			NextViewModel!.CopyEditStudent = new Student();
+			NextViewModel!.ClassId = CurrentClassroom!.ID;
 
-		NextView!.DataContext = NextViewModel;
+			NextView!.DataContext = NextViewModel;
 
-		MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
 
-		win?.Navigate(NextView);
+			win?.Navigate(NextView);
+		}
+		catch
+		{
+			MessageBox.Show("Error in Add Student Command Execute.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+		}
 	}
 
 	#endregion
@@ -105,19 +112,26 @@ public class ShowClassroomPageViewModel : BaseViewModel
 	}
 	public void EditStudentCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<StudentRegisterPageView>();
-		var NextViewModel = App.Container.GetInstance<StudentRegisterPageViewModel>();
-
-		if (App.Container!.GetInstance<ShowClassroomPageView>().BaseListView.SelectedValue is Student teacher)
+		try
 		{
-			NextViewModel!.isEdit = true;
-			NextViewModel!.EditStudent = teacher;
-			NextViewModel!.CopyEditStudent = teacher.Clone() as Student;
-			NextView!.DataContext = NextViewModel;
+			var NextView = App.Container!.GetInstance<StudentRegisterPageView>();
+			var NextViewModel = App.Container.GetInstance<StudentRegisterPageViewModel>();
 
-			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+			if (App.Container!.GetInstance<ShowClassroomPageView>().BaseListView.SelectedValue is Student teacher)
+			{
+				NextViewModel!.isEdit = true;
+				NextViewModel!.EditStudent = teacher;
+				NextViewModel!.CopyEditStudent = teacher.Clone() as Student;
+				NextView!.DataContext = NextViewModel;
 
-			win?.Navigate(NextView);
+				MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+
+				win?.Navigate(NextView);
+			}
+		}
+		catch
+		{
+			MessageBox.Show("Error in Edit Student Command Execute.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
 
@@ -139,8 +153,8 @@ public class ShowClassroomPageViewModel : BaseViewModel
 			else if (index == 3)
 				CurrentClassroom!.Students = new(CurrentClassroom!.Students?.OrderByDescending(s => s.Surname)!);
 
-			App.Container!.GetInstance<AdminPageView>().BaseListView.ItemsSource = CurrentClassroom!.Students;
-			App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+			App.Container!.GetInstance<ShowClassroomPageView>().BaseListView.ItemsSource = CurrentClassroom!.Students;
+			App.Container!.GetInstance<ShowClassroomPageView>().BaseListView.Items.Refresh();
 		}
 		catch
 		{

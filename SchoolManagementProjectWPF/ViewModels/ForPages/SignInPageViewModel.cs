@@ -35,52 +35,56 @@ public class SignInPageViewModel : BaseViewModel
 	}
 	public void ConfirmCommandExecute(object? obj)
 	{
-		object? o = AppDbContex.GetUser(User);
-
-		Page? NextView = null;
-
-		if (o is Student)
-		{
-			NextView = App.Container?.GetInstance<StudentPageView>();
-			var NextViewModel = App.Container?.GetInstance<StudentPageViewModel>();
-
-			NextViewModel!.CurrentStudent = o as Student;
-
-			NextView!.DataContext = NextViewModel;
-		}
-		else if (o is Teacher)
-		{
-			NextView = App.Container?.GetInstance<TeacherPageView>();
-			var NextViewModel = App.Container?.GetInstance<TeacherPageViewModel>();
-
-			NextViewModel!.CurrentTeacher = o as Teacher;
-
-			if (NextViewModel!.CurrentTeacher!.ClassID is not null)
-				NextViewModel!.Exams = AppDbContex.School!.GetClassroom(NextViewModel.CurrentTeacher!.ClassID!.Value)?.GetExams();
-			else
-				NextViewModel!.Exams = new();
-
-			App.Container!.GetInstance<TeacherPageView>().BaseListView.ItemsSource = NextViewModel!.Exams;
-			App.Container!.GetInstance<TeacherPageView>().BaseListView.Items.Refresh();
-
-			NextView!.DataContext = NextViewModel;
-		}
-		else if (o is Admin)
-		{
-			NextView = App.Container?.GetInstance<AdminPageView>();
-
-			var NextViewModel = App.Container?.GetInstance<AdminPageViewModel>();
-
-			NextView!.DataContext = NextViewModel;
-		}
-		else
-		{
-			MessageBox.Show("Wrong Data Entered !");
-			return;
-		}
-
 		try
 		{
+			object? o = AppDbContex.GetUser(User);
+
+			Page? NextView = null;
+
+			User!.UserName="";
+			User.Email="";
+			User.Password="";
+
+			if (o is Student)
+			{
+				NextView = App.Container?.GetInstance<StudentPageView>();
+				var NextViewModel = App.Container?.GetInstance<StudentPageViewModel>();
+
+				NextViewModel!.CurrentStudent = o as Student;
+
+				NextView!.DataContext = NextViewModel;
+			}
+			else if (o is Teacher)
+			{
+				NextView = App.Container?.GetInstance<TeacherPageView>();
+				var NextViewModel = App.Container?.GetInstance<TeacherPageViewModel>();
+
+				NextViewModel!.CurrentTeacher = o as Teacher;
+
+				if (NextViewModel!.CurrentTeacher!.ClassID is not null)
+					NextViewModel!.Exams = AppDbContex.School!.GetClassroom(NextViewModel.CurrentTeacher!.ClassID!.Value)?.GetExams();
+				else
+					NextViewModel!.Exams = new();
+
+				App.Container!.GetInstance<TeacherPageView>().BaseListView.ItemsSource = NextViewModel!.Exams;
+				App.Container!.GetInstance<TeacherPageView>().BaseListView.Items.Refresh();
+
+				NextView!.DataContext = NextViewModel;
+			}
+			else if (o is Admin)
+			{
+				NextView = App.Container?.GetInstance<AdminPageView>();
+
+				var NextViewModel = App.Container?.GetInstance<AdminPageViewModel>();
+
+				NextView!.DataContext = NextViewModel;
+			}
+			else
+			{
+				MessageBox.Show("Wrong Data Entered !");
+				return;
+			}
+
 			(obj as Page)!.NavigationService.Navigate(NextView);
 		}
 		catch

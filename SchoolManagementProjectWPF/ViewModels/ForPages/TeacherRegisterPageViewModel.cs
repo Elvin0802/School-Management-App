@@ -16,7 +16,7 @@ public class TeacherRegisterPageViewModel : BaseViewModel
 		ChangeThemeCommand=new RelayCommand(ChangeThemeColor);
 		BackCommand = new RelayCommand(BackCommandExecute);
 
-		VerifyEmailCommand = new RelayCommand(VerifyEmailCommandExecute);
+		VerifyEmailCommand = new RelayCommand(VerifyEmailCommandExecute, VerifyEmailCommandCanExecute);
 
 		SaveCommand = new RelayCommand(SaveCommandExecute, SaveCommandCanExecute);
 		ChangePPCommand = new RelayCommand(ChangePPExecute);
@@ -29,6 +29,7 @@ public class TeacherRegisterPageViewModel : BaseViewModel
 	public string? verifyCode;
 	public string? sendedCode;
 
+	public Notification? VerifyNotification { get; set; } = new() { HeaderText="School Management Email Vertification System" };
 	public Teacher? CopyEditTeacher { get => copyEditTeacher; set { copyEditTeacher = value; OnPropertyChanged(); } }
 	public Teacher? EditTeacher { get => editTeacher; set { editTeacher = value; OnPropertyChanged(); } }
 	public string? VerifyCode { get => verifyCode; set { verifyCode = value; OnPropertyChanged(); } }
@@ -37,13 +38,21 @@ public class TeacherRegisterPageViewModel : BaseViewModel
 	#region Verify Email Command
 
 	public ICommand VerifyEmailCommand { get; set; }
+	private bool VerifyEmailCommandCanExecute(object? obj)
+	{
+		if (CheckService.CheckEmail(CopyEditTeacher!.Email))
+			return true;
+		return false;
+	}
 	private void VerifyEmailCommandExecute(object? obj)
 	{
 		try
 		{
 			sendedCode = Random.Shared.Next(1001, 9998).ToString();
-			var not = new Notification(DateTime.Now, $"Your Verify Code : {sendedCode}", "School Management Email Vertification System");
-			Network.SendNotificationToEmail(not, CopyEditTeacher!.Email!);
+
+			VerifyNotification!.Message = $"Your Verify Code : {sendedCode}";
+
+			Network.SendNotificationToEmail(VerifyNotification, CopyEditTeacher!.Email!);
 			MessageBox.Show("Code Sended.");
 		}
 		catch { MessageBox.Show("Error in Code Sender"); }
@@ -76,6 +85,8 @@ public class TeacherRegisterPageViewModel : BaseViewModel
 			DbOperations.WriteTeachers(AppDbContex.School!);
 
 			App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+
+			VerifyCode = "";
 
 			MessageBox.Show("Teacher Added.");
 		}

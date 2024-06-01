@@ -16,7 +16,7 @@ public class StudentRegisterPageViewModel : BaseViewModel
 		ChangeThemeCommand=new RelayCommand(ChangeThemeColor);
 		BackCommand = new RelayCommand(BackCommandExecute);
 
-		VerifyEmailCommand = new RelayCommand(VerifyEmailCommandExecute);
+		VerifyEmailCommand = new RelayCommand(VerifyEmailCommandExecute, VerifyEmailCommandCanExecute);
 		SaveCommand = new RelayCommand(SaveCommandExecute, SaveCommandCanExecute);
 		ChangePPCommand = new RelayCommand(ChangePPExecute);
 	}
@@ -28,6 +28,7 @@ public class StudentRegisterPageViewModel : BaseViewModel
 	private string? sendedCode;
 	public bool isEdit;
 
+	public Notification? VerifyNotification { get; set; } = new() { HeaderText="School Management Email Vertification System" };
 	public Student? CopyEditStudent { get => copyEditStudent; set { copyEditStudent = value; OnPropertyChanged(); } }
 	public Student? EditStudent { get => editStudent; set { editStudent = value; OnPropertyChanged(); } }
 	public Guid? ClassId { get => classId; set { classId = value; OnPropertyChanged(); } }
@@ -37,19 +38,28 @@ public class StudentRegisterPageViewModel : BaseViewModel
 	#region Verify Email Command
 
 	public ICommand VerifyEmailCommand { get; set; }
+
+	private bool VerifyEmailCommandCanExecute(object? obj)
+	{
+		if (CheckService.CheckEmail(CopyEditStudent!.Email))
+			return true;
+		return false;
+	}
 	private void VerifyEmailCommandExecute(object? obj)
 	{
 		try
 		{
+
+			MessageBox.Show($"{CopyEditStudent!.Email}");
+
 			sendedCode = Random.Shared.Next(1001, 9998).ToString();
-			var not = new Notification(DateTime.Now, $"Your Verify Code : {sendedCode}", "School Management Email Vertification System");
-			Network.SendNotificationToEmail(not, CopyEditStudent!.Email!);
+
+			VerifyNotification!.Message = $"Your Verify Code : {sendedCode}";
+
+			Network.SendNotificationToEmail(VerifyNotification, CopyEditStudent!.Email!);
 			MessageBox.Show("Code Sended.");
 		}
-		catch
-		{
-			MessageBox.Show("Error in Code Sender");
-		}
+		catch { MessageBox.Show("Error in Code Sender"); }
 	}
 
 	#endregion
@@ -82,12 +92,16 @@ public class StudentRegisterPageViewModel : BaseViewModel
 
 				DbOperations.WriteClassrooms(AppDbContex.School!);
 
+				VerifyCode = "";
+
 				MessageBox.Show("Student Added.");
 			}
 		}
 		catch { MessageBox.Show("Error in Save Student"); }
-
-		BackCommandExecute(obj);
+		finally
+		{
+			BackCommandExecute(obj);
+		}
 	}
 
 	#endregion

@@ -89,6 +89,4 @@ public class StudentPageViewModel : BaseViewModel
 	}
 	#endregion
 
-
-
 }

@@ -25,7 +25,6 @@ public class AdminPageViewModel : BaseViewModel
 		EditTeacherCommand = new RelayCommand(EditTeacherCommandExecute, ChangeTeacherCommandCanExecute);
 
 		App.Container!.GetInstance<AdminPageView>().BaseListView.ItemsSource = Teachers;
-
 	}
 
 	private ObservableCollection<Teacher>? teachers;
@@ -57,15 +56,18 @@ public class AdminPageViewModel : BaseViewModel
 	}
 	public void AllClassroomsCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<AllClassroomsPageView>();
-		var NextViewModel = App.Container.GetInstance<AllClassroomsPageViewModel>();
+		try
+		{
+			var NextView = App.Container!.GetInstance<AllClassroomsPageView>();
+			var NextViewModel = App.Container.GetInstance<AllClassroomsPageViewModel>();
 
-		NextView!.DataContext = NextViewModel;
+			NextView!.DataContext = NextViewModel;
 
-		MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
 
-		win?.Navigate(NextView);
-
+			win?.Navigate(NextView);
+		}
+		catch { MessageBox.Show("Error in All Classrooms Command Execute.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 	}
 	#endregion
 
@@ -80,20 +82,24 @@ public class AdminPageViewModel : BaseViewModel
 	}
 	public void AddTeacherCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<TeacherRegisterPageView>();
-		var NextViewModel = App.Container.GetInstance<TeacherRegisterPageViewModel>();
+		try
+		{
+			var NextView = App.Container!.GetInstance<TeacherRegisterPageView>();
+			var NextViewModel = App.Container.GetInstance<TeacherRegisterPageViewModel>();
 
-		Teacher newTc = new();
+			Teacher newTc = new();
 
-		NextViewModel!.isEdit = false;
-		NextViewModel!.EditTeacher = newTc;
-		NextViewModel!.CopyEditTeacher = new Teacher();
+			NextViewModel!.isEdit = false;
+			NextViewModel!.EditTeacher = newTc;
+			NextViewModel!.CopyEditTeacher = new Teacher();
 
-		NextView!.DataContext = NextViewModel;
+			NextView!.DataContext = NextViewModel;
 
-		MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
 
-		win?.Navigate(NextView);
+			win?.Navigate(NextView);
+		}
+		catch { MessageBox.Show("Error in Add Teacher Command Execute.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 	}
 
 	#endregion
@@ -139,19 +145,26 @@ public class AdminPageViewModel : BaseViewModel
 	}
 	public void EditTeacherCommandExecute(object? obj)
 	{
-		var NextView = App.Container!.GetInstance<TeacherRegisterPageView>();
-		var NextViewModel = App.Container.GetInstance<TeacherRegisterPageViewModel>();
-
-		if (App.Container!.GetInstance<AdminPageView>().BaseListView.SelectedValue is Teacher teacher)
+		try
 		{
-			NextViewModel!.isEdit = true;
-			NextViewModel!.EditTeacher = teacher;
-			NextViewModel!.CopyEditTeacher = teacher.Clone() as Teacher;
-			NextView!.DataContext = NextViewModel;
+			var NextView = App.Container!.GetInstance<TeacherRegisterPageView>();
+			var NextViewModel = App.Container.GetInstance<TeacherRegisterPageViewModel>();
 
-			MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+			if (App.Container!.GetInstance<AdminPageView>().BaseListView.SelectedValue is Teacher teacher)
+			{
+				NextViewModel!.isEdit = true;
+				NextViewModel!.EditTeacher = teacher;
+				NextViewModel!.CopyEditTeacher = teacher.Clone() as Teacher;
+				NextView!.DataContext = NextViewModel;
 
-			win?.Navigate(NextView);
+				MainWindowView? win = App.Container?.GetInstance<MainWindowView>();
+
+				win?.Navigate(NextView);
+			}
+		}
+		catch
+		{
+			MessageBox.Show("Error in Edit Teacher Command Execute.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
 

@@ -12,7 +12,6 @@ public class Teacher : Person
 	{
 
 	}
-
 	public Teacher(string? name, string? surname, string? fatherName, DateTime? birthDate,
 				 int? gender, string? userName, string? email, string? password, string? address,
 				 string? phoneNumber, string? profilePicturePath)
@@ -53,5 +52,4 @@ public class Teacher : Person
 	}
 
 	public override string ToString() => $"{Name} / {UserName}";
-
 }

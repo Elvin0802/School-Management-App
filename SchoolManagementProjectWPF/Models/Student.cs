@@ -44,11 +44,13 @@ public class Student : Person
 
 	private double GetAvgExamGrade()
 	{
-		try { return (sbyte)Exams!.Sum(e => e.ExamGrade!.Value); }
+		try
+		{
+			return (byte)(Exams!.Sum(e => e.ExamGrade!.Value) / Exams!.Count);
+		}
 		catch { return 0; }
 	}
 
 	public void SetOwnerClassroom(Guid ClassroomID) => cId = ClassroomID;
-
 
 }

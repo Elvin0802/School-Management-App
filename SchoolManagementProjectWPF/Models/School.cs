@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 
 namespace SchoolManagementProjectWPF.Models;
 
-
 public class School : NotifyService
 {
 	private Guid id = Guid.Empty;

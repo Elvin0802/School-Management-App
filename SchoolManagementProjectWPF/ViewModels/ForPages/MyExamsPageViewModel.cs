@@ -14,7 +14,7 @@ public class MyExamsPageViewModel : BaseViewModel
 	{
 		BackCommand = new RelayCommand(BackCommandExecute);
 		ChangeThemeCommand = new RelayCommand(ChangeThemeColor);
-		TakeExamCommand=new RelayCommand(TakeExamCommandExecute);
+		TakeExamCommand=new RelayCommand(TakeExamCommandExecute, TakeExamCommandCanExecute);
 	}
 
 	private Student? currentStudent;
@@ -69,7 +69,6 @@ public class MyExamsPageViewModel : BaseViewModel
 		catch { MessageBox.Show("Exam not taked.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
 	}
 	#endregion
-
 	public void SortExams(int index)
 	{
 		try
@@ -87,8 +86,8 @@ public class MyExamsPageViewModel : BaseViewModel
 			else if (index == 5)
 				CurrentStudent!.Exams = new(CurrentStudent!.Exams?.OrderByDescending(s => s.ExamGrade)!);
 
-			App.Container!.GetInstance<AdminPageView>().BaseListView.ItemsSource = CurrentStudent!.Exams;
-			App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+			App.Container!.GetInstance<MyExamsPageView>().BaseListView.ItemsSource = CurrentStudent!.Exams;
+			App.Container!.GetInstance<MyExamsPageView>().BaseListView.Items.Refresh();
 		}
 		catch
 		{

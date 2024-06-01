@@ -7,8 +7,25 @@ public static class AppDbContex
 {
 	public static Admin? Admin { get; } = new("admin", "admin@gmail.com", "admin");
 	public static School? School { get; set; } = new();
-	public static ObservableCollection<string>? Subjects { get; set; } = new() {
-		"Az dili","Edebiyyat","Fizika","Kimya","Riyaziyyat","Cografiya","Herbi","Informatika"
+	public static ObservableCollection<string>? Subjects { get; set; } = new()
+	{
+		"Azerbaycan Dili",
+		"Edebiyyat",
+		"Fizika",
+		"Kimya",
+		"Riyaziyyat",
+		"Cografiya",
+		"Herbi",
+		"Informatika",
+		"Texnologiya",
+		"Musiqi",
+		"Tesviri Incesenet",
+		"Idman",
+		"Ingilis Dili",
+		"Fransiz Dili",
+		"Rus Dili",
+		"Alman Dili",
+		"STEAM",
 	};
 
 

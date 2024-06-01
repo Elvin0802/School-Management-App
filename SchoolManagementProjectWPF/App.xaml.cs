@@ -31,20 +31,14 @@ public partial class App : Application
 			var page = Container?.GetInstance<SignInPageView>();
 			page!.DataContext = Container?.GetInstance<SignInPageViewModel>();
 
-			// Test section --------------------------
-
-			//var page = Container?.GetInstance<AddClassroomPageView>();
-			//	page!.DataContext = Container?.GetInstance<AddClassroomPageViewModel>();
-
-			//-----------------------------------------
-
-
 			main.MainFrame.Navigate(page);
 
 			main.ShowDialog();
-
 		}
-		catch (Exception ex) { MessageBox.Show($"{ex.Message}", "Error in AppStart", MessageBoxButton.OK); }
+		catch (Exception ex)
+		{
+			MessageBox.Show($"{ex.Message}", "Error in AppStart", MessageBoxButton.OK);
+		}
 	}
 
 	public void RegisterOfViews()
