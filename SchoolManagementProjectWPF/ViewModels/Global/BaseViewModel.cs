@@ -40,7 +40,7 @@ public abstract class BaseViewModel : NotifyService, IGetImage
 		}
 		catch
 		{
-			MessageBox.Show("Error in Get Back Command", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			MessageBox.Show("Error in Back Command", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
 	#endregion

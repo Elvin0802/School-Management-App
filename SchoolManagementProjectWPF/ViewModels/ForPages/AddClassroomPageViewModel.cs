@@ -62,6 +62,8 @@ public class AddClassroomPageViewModel : BaseViewModel
 			if (!isEdit)
 				AppDbContex.School!.Classrooms!.Add(EditClassroom!);
 
+			App.Container!.GetInstance<AdminPageView>().BaseListView.Items.Refresh();
+
 			DbOperations.WriteClassrooms(AppDbContex.School!);
 			DbOperations.WriteTeachers(AppDbContex.School!);
 
